@@ -1,0 +1,33 @@
+ Create a note: 
+
+ 1. In Express, routes are wrapped in a function, which takes the Express instance and a database as arguments.
+
+ - example - 
+// routes/note_routes.js
+
+ module.exports = function(app, db) {
+     //someting here
+ };
+
+ 2. You then export this function through routes/index.js
+
+ // routes/index.js
+ const noteRoutes = require('./note_routes');
+ module.exports = function(app, db) {
+   noteRoutes(app, db);
+   // Other route groups could go here, in the future
+ };
+
+3. Then import it in server.js
+
+// server.js
+const express        = require('express');
+const MongoClient    = require('mongodb').MongoClient;
+const bodyParser     = require('body-parser');
+const app            = express();
+const port = 8000;
+
+require('./app/routes')(app, {});
+app.listen(port, () => {
+  console.log('We are live on ' + port);
+});
